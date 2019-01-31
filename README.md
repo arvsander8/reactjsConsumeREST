@@ -1,18 +1,46 @@
 # reactjsConsumeREST
-## Configuración del Proyecto
+## API GETWAY Configuration
 
-### Configuración de los Métodos en AWS para habilitar CORS
+### API Methods configuration to enabled CORS Headers
 
-1. Ingresar al menú de la consola de awx
-2. Seleccionar API GATEWAY
-3. Ir a la pesataña de recursos
-    1. Seleccionar el método para asignar las cabeceras necesarias
-    2. En el panel derecho escoger el cuadro de ***Respuesta de Método***
-        1. Expandir la opción *200* de ***Estado HTTP***
-            1. Click en ***Agregar encabezado***
-                1. Agregar uno por vez los siguientes encabezados:
+1. Go to console menu from AWS
+2. Click on  API GATEWAY Link
+3. Select reourses tab in the left panel
+    1. Select a method to assigne the headers access
+
+    ![Alt paso1](imgs/reactjsConsumeREST_2.png)
+
+    2. In the right opened panel, choose ***Respuesta de Método***
+    
+    ![Alt paso2](imgs/reactjsConsumeREST_3.png)
+    * Expand the *200* option from the ***Estado HTTP***
+        * Click on ***Agregar encabezado***
+            ![Alt paso2](imgs/reactjsConsumeREST_4.png)
+            * You need to add the next headers now.:
                     * `X-Requested-With`
                     * `Access-Control-Allow-Headers`
                     * `Access-Control-Allow-Origin`
                     * `Access-Control-Allow-Methods`
-    3. En el panel derecho escoger el cuadro de ***
+                    ![Alt paso2](imgs/reactjsConsumeREST_5.png)
+
+    3. In the right panel, choose ***Respuestas de Integración***
+    ![Alt paso2](imgs/reactjsConsumeREST_6.png)
+
+    * Expand the *row with status 200*
+        * Expand ***Mapeos de encabezado*** 
+        ![Alt paso2](imgs/reactjsConsumeREST_7.png)
+
+        * Add the mapping value (***Valor de mapeo***) to all options like that and save changes:
+
+        Encabezado de Respuesta       |    Valor de mapeo
+        --------------------------    |---------------------------
+        X-Requested-With              | '*'
+        Access-Control-Allow-Headers  | 'Content-Type,x-requested-with,Access-Control-Allow-Origin,Access-Control-Allow-Headers,Access-Control-Allow-Methods'
+        Access-Control-Allow-Origin   | '*'
+        Access-Control-Allow-Methods  | 'POST, GET, OPTIONS'
+
+        ![Alt paso2](imgs/reactjsConsumeREST_8.png)
+
+
+    4. Finally, Deploy again the API
+    ![Alt paso2](imgs/reactjsConsumeREST_9.png)
