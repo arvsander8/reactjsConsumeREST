@@ -17,11 +17,11 @@
         * Click on ***Agregar encabezado***
             ![Alt paso2](imgs/reactjsConsumeREST_4.png)
             * You need to add the next headers now.:
-                    * `X-Requested-With`
-                    * `Access-Control-Allow-Headers`
-                    * `Access-Control-Allow-Origin`
-                    * `Access-Control-Allow-Methods`
-                    ![Alt paso2](imgs/reactjsConsumeREST_5.png)
+                * `X-Requested-With`
+                * `Access-Control-Allow-Headers`
+                * `Access-Control-Allow-Origin`
+                * `Access-Control-Allow-Methods`
+                ![Alt paso2](imgs/reactjsConsumeREST_5.png)
 
     3. In the right panel, choose ***Respuestas de Integración***
     ![Alt paso2](imgs/reactjsConsumeREST_6.png)
