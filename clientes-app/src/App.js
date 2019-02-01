@@ -13,7 +13,16 @@ class App extends Component {
         nombre: '',
         apellido: ''
       },
-      newClientModal: false
+      editClientData: {
+        id: '',
+        nombre: '',
+        apellido: ''
+      },
+      deleteClientData: {
+        id: ''
+      },
+      newClientModal: false,
+      editClientModal: false
     }
 
   }
@@ -22,6 +31,43 @@ class App extends Component {
   toggleNewClientModal() {
     this.setState({
       newClientModal: ! this.state.newClientModal
+    });
+  }
+
+  toggleEditClientModal() {
+    this.setState({
+      editClientModal: ! this.state.editClientModal
+    });
+  }
+
+  updateClient() {
+    //let { nombre, apellido } = this.state.editClientData;
+
+    axios.put('https://epgk5i5g2h.execute-api.us-east-1.amazonaws.com/desarrollo/leertabla', this.state.editClientData)
+    .then((response) => {
+      
+
+      this.setState({
+        editClientModal: false, editClientData: { id: '', nombre: '', apellido: '' }
+      });
+      this._refreshClients();
+    });
+  }
+
+  editClient(id, nombre, apellido) {
+    this.setState({
+      editClientData: { id, nombre, apellido }, editClientModal: ! this.state.editClientModal
+    });
+  }
+
+  deleteClient(id) {
+
+    this.setState({
+      deleteClientData: {id} 
+    });
+
+    axios.delete('https://epgk5i5g2h.execute-api.us-east-1.amazonaws.com/desarrollo/leertabla', this.state.deleteClientData).then((response) => {
+      this._refreshClients();
     });
   }
 
@@ -37,6 +83,7 @@ class App extends Component {
         nombre: '',
         apellido: ''
       }});
+      this._refreshClients();
     });
   }
   
@@ -74,8 +121,8 @@ class App extends Component {
               <td>{client.nombre}</td>
               <td>{client.apellido}</td>
               <td>
-                <Button color="success" size='sm' className="mr-2">Edit</Button>
-                <Button color="danger" size='sm'>Delete</Button>
+                <Button color="success" size='sm' className="mr-2" onClick={this.editClient.bind(this, client.id, client.nombre, client.apellido)}>Edit</Button>
+                <Button color="danger" size='sm' onClick={this.deleteClient.bind(this, client.id)}>Delete</Button>
               </td>
             </tr>
       );
@@ -129,6 +176,40 @@ class App extends Component {
             <Button color="secondary" onClick={this.toggleNewClientModal.bind(this)}>Cancel</Button>
           </ModalFooter>
         </Modal>
+
+
+
+        <Modal isOpen={this.state.editClientModal} toggle={this.toggleEditClientModal.bind(this)}>
+        <ModalHeader toggle={this.toggleEditClientModal.bind(this)}>Editar un Cliente</ModalHeader>
+        <ModalBody>
+          <FormGroup>
+            <Label for="nombre">Nombres</Label>
+            <Input id="nombre" value={this.state.editClientData.nombre} onChange={(e) => {
+              let { editClientData } = this.state;
+
+              editClientData.nombre = e.target.value;
+
+              this.setState({ editClientData });
+            }} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="apellido">Apellidos</Label>
+            <Input id="apellido" value={this.state.editClientData.apellido} onChange={(e) => {
+              let { editClientData } = this.state;
+
+              editClientData.apellido = e.target.value;
+
+              this.setState({ editClientData });
+            }} />
+          </FormGroup>
+
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.updateClient.bind(this)}>Atualizar Cliente</Button>{' '}
+          <Button color="secondary" onClick={this.toggleEditClientModal.bind(this)}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+
 
 
         <Table>
