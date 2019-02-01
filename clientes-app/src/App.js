@@ -60,13 +60,10 @@ class App extends Component {
     });
   }
 
+
   deleteClient(id) {
 
-    this.setState({
-      deleteClientData: {id} 
-    });
-
-    axios.delete('https://epgk5i5g2h.execute-api.us-east-1.amazonaws.com/desarrollo/leertabla', this.state.deleteClientData).then((response) => {
+    axios.delete('https://epgk5i5g2h.execute-api.us-east-1.amazonaws.com/desarrollo/leertabla' , {data:{"id": id}}).then((response) => {
       this._refreshClients();
     });
   }
